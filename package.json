@@ -1,0 +1,52 @@
+{
+  "bin": "dist/index.js",
+  "main": "dist/index.js",
+  "name": "ts-tiled-converter",
+  "version": "0.0.1",
+  "description": "Typescript library to convert tiled map to Studio map",
+  "author": {
+    "email": "dont-email@communityscriptproject.com",
+    "name": "Nuri Yuri"
+  },
+  "repository": {
+    "url": "https://github.com/NuriYuri/ts-tiled-converter"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "keywords": [
+    "tiled",
+    "pokémon",
+    "studio",
+    "typescript"
+  ],
+  "dependencies": {
+    "fast-xml-parser": "^4.2.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.1",
+    "@types/node": "^16.11.7",
+    "jest": "^28.1.0",
+    "ts-jest": "^28.0.4",
+    "ts-node": "^10.8.1",
+    "tslib": "^2.4.0",
+    "tslint": "^6.1.3",
+    "typescript": "^4.5.4"
+  },
+  "files": [
+    "index.d.ts",
+    "dist/lib/*.d.ts",
+    "dist/lib/*.js",
+    "dist/lib/*.js.map",
+    "dist/lib/**/*.d.ts",
+    "dist/lib/**/*.js",
+    "dist/lib/**/*.js.map",
+    "dist/*.js",
+    "dist/*.js.map",
+    "dist/**/*.js",
+    "dist/**/*.js.map",
+    "lib/**/*",
+    "tsconfig.json"
+  ]
+}

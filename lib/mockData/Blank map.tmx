@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="32" height="32" tilewidth="32" tileheight="32" infinite="0" nextlayerid="183" nextobjectid="1">
+ <tileset firstgid="1" source="../Tilesets/Atori_borders.tsx"/>
+ <tileset firstgid="361" source="../Tilesets/Atori_Urban.tsx"/>
+ <tileset firstgid="9577" source="../Tilesets/Atori_systemtags.tsx"/>
+ <tileset firstgid="9705" source="../Tilesets/Atori_Nature.tsx"/>
+ <tileset firstgid="15664" source="../Tilesets/Atori_passages.tsx"/>
+ <tileset firstgid="15680" source="../Tilesets/Atori_Mounts.tsx"/>
+ <layer id="1" name="Borders" width="32" height="32">
+  <data encoding="csv">
+someCSVDATA(UNPARSED)
+</data>
+ </layer>
+</map>
