@@ -8,3 +8,9 @@ export type TileMetaData = {
   /** Flip data on a 4bit number */
   transformId: number;
 };
+
+export type LayerWithMetaData = {
+  z: number;
+  name: string;
+  layer: (TileMetaData | null)[];
+};

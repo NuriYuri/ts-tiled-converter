@@ -29,7 +29,7 @@ export type TiledXMLObjectGroup = XMLObject<'objectgroup', TiledXMLObjectGroupPr
 export type TiledXMLImage = XMLObjectWithoutChildren<'image', TiledXMLImageProperty>;
 export type TiledXMLImageLayer = XMLObject<'imagelayer', TiledXMLImageLayerProperty, TiledXMLProperties | TiledXMLImage>;
 export type TiledXMLGroup = {
-  group: TiledXMLProperties | TiledXMLLayer | TiledXMLObjectGroup | TiledXMLImageLayer | TiledXMLGroup;
+  group: (TiledXMLProperties | TiledXMLLayer | TiledXMLObjectGroup | TiledXMLImageLayer | TiledXMLGroup)[];
   ':@': TiledXMLGroupProperty;
 };
 export type TiledXMLMap = XMLObject<

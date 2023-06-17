@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="2" height="2" tilewidth="32" tileheight="32" infinite="0" nextlayerid="23" nextobjectid="1">
+ <tileset firstgid="1" source="../../../../comissions2/demo/Tilesets/Atori_borders.tsx"/>
+ <layer id="6" name="orphan1" width="2" height="2" visible="0">
+  <data encoding="csv">
+1,1,
+1,0
+</data>
+ </layer>
+ <layer id="7" name="orphan2" width="2" height="2" visible="0">
+  <data encoding="csv">
+2,2,
+0,2
+</data>
+ </layer>
+ <group id="8" name="z=1" visible="0">
+  <layer id="9" name="ground" width="2" height="2">
+   <data encoding="csv">
+0,3,
+0,3
+</data>
+  </layer>
+  <layer id="10" name="badlySorted2" width="2" height="2">
+   <data encoding="csv">
+4,0,
+0,4
+</data>
+  </layer>
+ </group>
+ <group id="11" name="z=2" visible="0">
+  <layer id="12" name="badlySorted1" width="2" height="2">
+   <data encoding="csv">
+201,201,
+0,201
+</data>
+  </layer>
+  <layer id="13" name="trees" width="2" height="2">
+   <data encoding="csv">
+64,64,
+0,0
+</data>
+  </layer>
+  <group id="15" name="Sub Folder">
+   <layer id="16" name="trees_top" width="2" height="2">
+    <data encoding="csv">
+0,25,
+0,0
+</data>
+   </layer>
+  </group>
+ </group>
+ <group id="17" name="z=3">
+  <group id="19" name="before">
+   <layer id="21" name="inBefore" width="2" height="2">
+    <data encoding="csv">
+0,0,
+0,0
+</data>
+   </layer>
+  </group>
+  <layer id="20" name="middle" width="2" height="2">
+   <data encoding="csv">
+0,0,
+0,0
+</data>
+  </layer>
+  <group id="18" name="after">
+   <layer id="22" name="inAfter" width="2" height="2">
+    <data encoding="csv">
+0,0,
+0,0
+</data>
+   </layer>
+  </group>
+ </group>
+ <group id="2" name="system" visible="0">
+  <layer id="5" name="passages" width="2" height="2">
+   <data encoding="csv">
+0,7,
+7,0
+</data>
+  </layer>
+  <layer id="1" name="systemtags" width="2" height="2">
+   <data encoding="csv">
+85,0,
+0,85
+</data>
+  </layer>
+  <layer id="3" name="systemtags_bridge1" width="2" height="2">
+   <data encoding="csv">
+65,65,
+0,65
+</data>
+  </layer>
+  <layer id="4" name="systemtags_bridge2" width="2" height="2">
+   <data encoding="csv">
+0,66,
+66,66
+</data>
+  </layer>
+ </group>
+</map>

@@ -1,0 +1,224 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapToTileLayersWithMetaData maps data properly 1`] = `
+[
+  {
+    "layer": [
+      {
+        "globalId": 1,
+        "transformId": 0,
+      },
+      {
+        "globalId": 1,
+        "transformId": 0,
+      },
+      {
+        "globalId": 1,
+        "transformId": 0,
+      },
+      null,
+    ],
+    "name": "orphan1",
+    "z": 0,
+  },
+  {
+    "layer": [
+      {
+        "globalId": 2,
+        "transformId": 0,
+      },
+      {
+        "globalId": 2,
+        "transformId": 0,
+      },
+      null,
+      {
+        "globalId": 2,
+        "transformId": 0,
+      },
+    ],
+    "name": "orphan2",
+    "z": 1,
+  },
+  {
+    "layer": [
+      null,
+      {
+        "globalId": 3,
+        "transformId": 0,
+      },
+      null,
+      {
+        "globalId": 3,
+        "transformId": 0,
+      },
+    ],
+    "name": "ground",
+    "z": 0,
+  },
+  {
+    "layer": [
+      {
+        "globalId": 4,
+        "transformId": 0,
+      },
+      null,
+      null,
+      {
+        "globalId": 4,
+        "transformId": 0,
+      },
+    ],
+    "name": "badlySorted2",
+    "z": 1,
+  },
+  {
+    "layer": [
+      {
+        "globalId": 201,
+        "transformId": 0,
+      },
+      {
+        "globalId": 201,
+        "transformId": 0,
+      },
+      null,
+      {
+        "globalId": 201,
+        "transformId": 0,
+      },
+    ],
+    "name": "badlySorted1",
+    "z": 0,
+  },
+  {
+    "layer": [
+      {
+        "globalId": 64,
+        "transformId": 0,
+      },
+      {
+        "globalId": 64,
+        "transformId": 0,
+      },
+      null,
+      null,
+    ],
+    "name": "trees",
+    "z": 1,
+  },
+  {
+    "layer": [
+      null,
+      {
+        "globalId": 25,
+        "transformId": 0,
+      },
+      null,
+      null,
+    ],
+    "name": "trees_top",
+    "z": 1,
+  },
+  {
+    "layer": [
+      null,
+      null,
+      null,
+      null,
+    ],
+    "name": "inBefore",
+    "z": 2,
+  },
+  {
+    "layer": [
+      null,
+      null,
+      null,
+      null,
+    ],
+    "name": "middle",
+    "z": 2,
+  },
+  {
+    "layer": [
+      null,
+      null,
+      null,
+      null,
+    ],
+    "name": "inAfter",
+    "z": 2,
+  },
+  {
+    "layer": [
+      null,
+      {
+        "globalId": 7,
+        "transformId": 0,
+      },
+      {
+        "globalId": 7,
+        "transformId": 0,
+      },
+      null,
+    ],
+    "name": "passages",
+    "z": 0,
+  },
+  {
+    "layer": [
+      {
+        "globalId": 85,
+        "transformId": 0,
+      },
+      null,
+      null,
+      {
+        "globalId": 85,
+        "transformId": 0,
+      },
+    ],
+    "name": "systemtags",
+    "z": 0,
+  },
+  {
+    "layer": [
+      {
+        "globalId": 65,
+        "transformId": 0,
+      },
+      {
+        "globalId": 65,
+        "transformId": 0,
+      },
+      null,
+      {
+        "globalId": 65,
+        "transformId": 0,
+      },
+    ],
+    "name": "systemtags_bridge1",
+    "z": 0,
+  },
+  {
+    "layer": [
+      null,
+      {
+        "globalId": 66,
+        "transformId": 0,
+      },
+      {
+        "globalId": 66,
+        "transformId": 0,
+      },
+      {
+        "globalId": 66,
+        "transformId": 0,
+      },
+    ],
+    "name": "systemtags_bridge2",
+    "z": 1,
+  },
+]
+`;
