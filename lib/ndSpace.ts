@@ -7,7 +7,7 @@
  */
 type RecursiveMap<TData, TDeadEnd> = Map<TData | TDeadEnd, RecursiveMap<TData, TDeadEnd>>;
 
-type NDSpace<TData, TDeadEnd> = {
+export type NDSpace<TData, TDeadEnd> = {
   deadEnd: TDeadEnd;
   recursiveMap: RecursiveMap<TData, TDeadEnd>;
   itemsOrderedByIds: TData[][];

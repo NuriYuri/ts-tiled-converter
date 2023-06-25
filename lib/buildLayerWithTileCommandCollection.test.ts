@@ -1,7 +1,7 @@
 import { mapToTileLayersWithMetaData } from './mapToTileLayersWithMetaData';
 import { readMap } from './readMap';
 import { splitSpecialAndRegularLayers } from './splitSpecialAndRegularLayers';
-import { buildTileCommandCollection } from './buildTileCommandCollection';
+import { buildLayerWithTileCommandCollection } from './buildLayerWithTileCommandCollection';
 
 describe('buildTileCommandCollection', () => {
   it('build tile command collection properly', () => {
@@ -14,6 +14,6 @@ describe('buildTileCommandCollection', () => {
     const splitted = splitSpecialAndRegularLayers(map.map, layers);
     if (splitted instanceof Error) throw splitted;
 
-    expect(buildTileCommandCollection(splitted)).toMatchSnapshot();
+    expect(buildLayerWithTileCommandCollection(splitted)).toMatchSnapshot();
   });
 });

@@ -9,6 +9,14 @@ export type TileMetaData = {
   transformId: number;
 };
 
+export type LayersWithTileCommandCollection = {
+  commands: TileCommandCollection;
+  passages: number[];
+  systemTags: number[];
+  systemTagsBridge1: number[];
+  systemTagsBridge2: number[];
+};
+
 export type TileCommandCollection = {
   passages: { passage: number }[];
   systemTags: { systemTag: number }[];
