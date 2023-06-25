@@ -1,8 +1,8 @@
 import { TiledXMLMap, TiledXMLMapTileset, getXMLProperties } from './tiledXML/objects';
-import { LayerWithMetaData, TileMetaData } from './types';
+import { LayerSplittedFromSpecialLayers, LayerWithMetaData, TileMetaData } from './types';
 import { throwIfError, toError } from './util';
 
-export const splitSpecialAndRegularLayers = (map: TiledXMLMap, layers: LayerWithMetaData[]) => {
+export const splitSpecialAndRegularLayers = (map: TiledXMLMap, layers: LayerWithMetaData[]): LayerSplittedFromSpecialLayers | Error => {
   try {
     return {
       regularLayers: layers.filter(filterRegularLayers),

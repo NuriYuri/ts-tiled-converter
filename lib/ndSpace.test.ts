@@ -7,7 +7,7 @@ describe('ndSpace', () => {
     { globalId: 1, transformId: 0 },
     { globalId: 2, transformId: 0 },
     { globalId: 3, transformId: 0 },
-    { globalId: 0, transformId: 0 }, // This on is different from first one because it's rotated differently
+    { globalId: 0, transformId: 0 }, // This one is different from first one because it's rotated differently
   ];
 
   it('resolve ids in a stable manner', () => {

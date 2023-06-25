@@ -9,8 +9,26 @@ export type TileMetaData = {
   transformId: number;
 };
 
+export type TileCommandCollection = {
+  passages: { passage: number }[];
+  systemTags: { systemTag: number }[];
+  priorities: { priority: number }[];
+};
+
+export type TileCommand = TileCommandCollection[keyof TileCommandCollection][number];
+
 export type LayerWithMetaData = {
   z: number;
   name: string;
   layer: (TileMetaData | null)[];
+};
+
+export type SpecialLayer = {
+  name: string;
+  layer: number[];
+};
+
+export type LayerSplittedFromSpecialLayers = {
+  regularLayers: LayerWithMetaData[];
+  specialLayers: SpecialLayer[];
 };
