@@ -32,6 +32,7 @@ type Context = {
   systemTag: TileCommand | undefined;
   bridge1: TileCommand | undefined;
   bridge2: TileCommand | undefined;
+  terrainTag: TileCommand | undefined;
   passage: TileCommand;
   priorities: TileCommand[];
   layers: LayerWithOnlyMetaData[];
@@ -42,6 +43,7 @@ const getContext = (tileIndex: number, regularLayers: LayerWithMetaData[], layer
   const bridge1 = layerWithCommands.systemTagsBridge1[tileIndex] || 0;
   const bridge2 = layerWithCommands.systemTagsBridge2[tileIndex] || 0;
   const passage = layerWithCommands.passages[tileIndex] || 0;
+  const terrainTag = layerWithCommands.terrainTags[tileIndex] || 0;
   const layers = regularLayers.filter((layer): layer is LayerWithOnlyMetaData => !!layer.layer[tileIndex]);
   const { commands } = layerWithCommands;
   return {
@@ -49,6 +51,7 @@ const getContext = (tileIndex: number, regularLayers: LayerWithMetaData[], layer
     systemTag: systemTag !== 0 ? commands.systemTags.find((v) => v.systemTag === systemTag) : undefined,
     bridge1: bridge1 !== 0 ? commands.systemTags.find((v) => v.systemTag === bridge1) : undefined,
     bridge2: bridge2 !== 0 ? commands.systemTags.find((v) => v.systemTag === bridge2) : undefined,
+    terrainTag: terrainTag !== 0 ? commands.terrainTags.find((v) => v.terrainTag === terrainTag) : undefined,
     passage: commands.passages.find((v) => v.passage === passage)!,
     priorities: commands.priorities,
     layers,
@@ -56,13 +59,13 @@ const getContext = (tileIndex: number, regularLayers: LayerWithMetaData[], layer
 };
 
 const compressTilesWithNoZ = (context: Context, cache: LayerTileCache) => {
-  const { tileIndex, layers, systemTag, passage } = context;
+  const { tileIndex, layers, passage } = context;
   const mapToTile = toTileByIndex(tileIndex);
 
   return [
     layers.slice(0, -2).map(mapToTile),
     layers.slice(-2, -1).map(mapToTile),
-    systemTag ? [...layers.slice(-1).map(mapToTile), systemTag, passage] : [...layers.slice(-1).map(mapToTile), passage],
+    [...layers.slice(-1).map(mapToTile), context.systemTag, context.terrainTag, passage].filter(excludeUndefined),
   ]
     .filter(filterOutEmptyArrays)
     .map(mapToTileId(cache));
@@ -71,7 +74,7 @@ const compressTilesWithNoZ = (context: Context, cache: LayerTileCache) => {
 const GROUP_BY_Z = ['ground', 'bridge1Layer', 'bridge1Layer', 'bridge1Layer', 'bridge2Layer', 'bridge2Layer'];
 
 const compressTilesWithBridge = (context: Context, cache: LayerTileCache) => {
-  const { tileIndex, layers, systemTag, passage, bridge1, bridge2, priorities } = context;
+  const { tileIndex, layers, systemTag, terrainTag, passage, bridge1, bridge2, priorities } = context;
   const mapToTile = toTileByIndex(tileIndex);
   const { ground, bridge1Layer, bridge2Layer } = groupBy(layers, ({ z }) => GROUP_BY_Z[z] || GROUP_BY_Z[5]);
   const tileLayers: LayerTile[][] = [
@@ -81,6 +84,7 @@ const compressTilesWithBridge = (context: Context, cache: LayerTileCache) => {
   ];
 
   if (systemTag) tileLayers[0].push(systemTag);
+  if (terrainTag) tileLayers[0].push(terrainTag);
   tileLayers[0].push(passage);
 
   if (bridge1 && tileLayers[1].length) tileLayers[1].push(bridge1);
@@ -93,7 +97,7 @@ const GROUND = 'ground';
 const PRIORITY = 'priority';
 
 const compressTiles = (context: Context, cache: LayerTileCache) => {
-  const { tileIndex, layers, systemTag, passage, priorities } = context;
+  const { tileIndex, layers, passage, priorities } = context;
   const mapToTile = toTileByIndex(tileIndex);
   const { ground, priority } = groupBy(layers, ({ z }) => (z === 0 ? GROUND : PRIORITY));
   const highestPriority = Math.max(...priority.map(({ z }) => z));
@@ -101,12 +105,12 @@ const compressTiles = (context: Context, cache: LayerTileCache) => {
   const tileLayers =
     !ground || ground.length === 0
       ? [
-          systemTag ? [mapToTile(priority[0]), systemTag, passage] : [mapToTile(priority[0]), passage],
+          [mapToTile(priority[0]), context.systemTag, context.terrainTag, passage].filter(excludeUndefined),
           [priorities[highestPriority] || priorities[5], ...priority.map(mapToTile)],
         ]
       : [
           ground.slice(0, -1).map(mapToTile),
-          systemTag ? [...ground.slice(-1).map(mapToTile), systemTag, passage] : [...ground.slice(-1).map(mapToTile), passage],
+          [...ground.slice(-1).map(mapToTile), context.systemTag, context.terrainTag, passage].filter(excludeUndefined),
           [priorities[highestPriority] || priorities[5], ...priority.map(mapToTile)],
         ];
 
@@ -116,3 +120,4 @@ const compressTiles = (context: Context, cache: LayerTileCache) => {
 const toTileByIndex = (tileIndex: number) => (layer: LayerWithOnlyMetaData) => layer.layer[tileIndex];
 const filterOutEmptyArrays = <T>({ length }: T[]) => length !== 0;
 const mapToTileId = (cache: LayerTileCache) => (layer: LayerTile[]) => resolveNDSpaceId(cache, layer);
+const excludeUndefined = <T>(v: T): v is Exclude<T, undefined> => v as boolean;

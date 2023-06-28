@@ -12,6 +12,7 @@ const tiles: TileMetaData[] = [
 ];
 
 const priorities = [0, 1, 2, 3, 4, 5].map((priority) => ({ priority }));
+const terrainTags = [{ terrainTag: 1 }];
 
 describe('compressLayersTile', () => {
   describe('compressTilesWithNoZ', () => {
@@ -31,11 +32,12 @@ describe('compressLayersTile', () => {
             { z: 2, name: '', layer: [null] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities, terrainTags },
             passages: [15],
             systemTags: [384],
             systemTagsBridge1: [0],
             systemTagsBridge2: [0],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -59,11 +61,12 @@ describe('compressLayersTile', () => {
             { z: 2, name: '', layer: [null] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities, terrainTags },
             passages: [15],
             systemTags: [384],
             systemTagsBridge1: [0],
             systemTagsBridge2: [0],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -82,11 +85,12 @@ describe('compressLayersTile', () => {
             { z: 2, name: '', layer: [null] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities, terrainTags },
             passages: [15],
             systemTags: [384],
             systemTagsBridge1: [0],
             systemTagsBridge2: [0],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -110,11 +114,12 @@ describe('compressLayersTile', () => {
             { z: 2, name: '', layer: [null] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities, terrainTags },
             passages: [15],
             systemTags: [0],
             systemTagsBridge1: [384],
             systemTagsBridge2: [384],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -138,11 +143,12 @@ describe('compressLayersTile', () => {
             { z: 2, name: '', layer: [null] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [], priorities, terrainTags },
             passages: [15],
             systemTags: [0],
             systemTagsBridge1: [0],
             systemTagsBridge2: [0],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -162,11 +168,12 @@ describe('compressLayersTile', () => {
             { z: 2, name: '', layer: [null] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [], priorities, terrainTags },
             passages: [15],
             systemTags: [0],
             systemTagsBridge1: [0],
             systemTagsBridge2: [0],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -185,16 +192,17 @@ describe('compressLayersTile', () => {
             { z: 2, name: '', layer: [null] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [], priorities, terrainTags },
             passages: [15],
             systemTags: [0],
             systemTagsBridge1: [0],
             systemTagsBridge2: [0],
+            terrainTags: [1],
           },
           cache,
         ),
       ).toEqual([0]);
-      expect(cache.itemsOrderedByIds).toEqual([[tiles[0], { passage: 15 }]]);
+      expect(cache.itemsOrderedByIds).toEqual([[tiles[0], { terrainTag: 1 }, { passage: 15 }]]);
     });
   });
 
@@ -211,11 +219,12 @@ describe('compressLayersTile', () => {
             { z: 2, name: '', layer: [null] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 385 }, { systemTag: 384 }], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 385 }, { systemTag: 384 }], priorities, terrainTags },
             passages: [15],
             systemTags: [384],
             systemTagsBridge1: [385],
             systemTagsBridge2: [0],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -238,11 +247,12 @@ describe('compressLayersTile', () => {
             { z: 2, name: '', layer: [null] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 385 }, { systemTag: 384 }], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 385 }, { systemTag: 384 }], priorities, terrainTags },
             passages: [15],
             systemTags: [384],
             systemTagsBridge1: [0],
             systemTagsBridge2: [385],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -265,11 +275,17 @@ describe('compressLayersTile', () => {
             { z: 5, name: '', layer: [tiles[3]] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 385 }, { systemTag: 384 }, { systemTag: 386 }], priorities },
+            commands: {
+              passages: [{ passage: 15 }],
+              systemTags: [{ systemTag: 385 }, { systemTag: 384 }, { systemTag: 386 }],
+              priorities,
+              terrainTags,
+            },
             passages: [15],
             systemTags: [384],
             systemTagsBridge1: [386],
             systemTagsBridge2: [385],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -291,11 +307,17 @@ describe('compressLayersTile', () => {
             { z: 5, name: '', layer: [tiles[3]] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 385 }, { systemTag: 384 }, { systemTag: 386 }], priorities },
+            commands: {
+              passages: [{ passage: 15 }],
+              systemTags: [{ systemTag: 385 }, { systemTag: 384 }, { systemTag: 386 }],
+              priorities,
+              terrainTags,
+            },
             passages: [15],
             systemTags: [384],
             systemTagsBridge1: [386],
             systemTagsBridge2: [385],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -314,17 +336,23 @@ describe('compressLayersTile', () => {
           0,
           [{ z: 5, name: '', layer: [tiles[3]] }],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 385 }, { systemTag: 384 }, { systemTag: 386 }], priorities },
+            commands: {
+              passages: [{ passage: 15 }],
+              systemTags: [{ systemTag: 385 }, { systemTag: 384 }, { systemTag: 386 }],
+              priorities,
+              terrainTags,
+            },
             passages: [15],
             systemTags: [384],
             systemTagsBridge1: [0],
             systemTagsBridge2: [385],
+            terrainTags: [1],
           },
           cache,
         ),
       ).toEqual([0, 1]);
       expect(cache.itemsOrderedByIds).toEqual([
-        [tiles[3], { systemTag: 384 }, { passage: 15 }],
+        [tiles[3], { systemTag: 384 }, { terrainTag: 1 }, { passage: 15 }],
         [priorities[5], tiles[3], { systemTag: 385 }],
       ]);
     });
@@ -341,11 +369,12 @@ describe('compressLayersTile', () => {
             { z: 2, name: '', layer: [null] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 385 }, { systemTag: 384 }], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 385 }, { systemTag: 384 }], priorities, terrainTags },
             passages: [15],
             systemTags: [0],
             systemTagsBridge1: [385],
             systemTagsBridge2: [0],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -368,11 +397,12 @@ describe('compressLayersTile', () => {
             { z: 2, name: '', layer: [null] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 385 }, { systemTag: 384 }], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 385 }, { systemTag: 384 }], priorities, terrainTags },
             passages: [15],
             systemTags: [0],
             systemTagsBridge1: [0],
             systemTagsBridge2: [385],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -395,11 +425,17 @@ describe('compressLayersTile', () => {
             { z: 5, name: '', layer: [tiles[3]] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 385 }, { systemTag: 384 }, { systemTag: 386 }], priorities },
+            commands: {
+              passages: [{ passage: 15 }],
+              systemTags: [{ systemTag: 385 }, { systemTag: 384 }, { systemTag: 386 }],
+              priorities,
+              terrainTags,
+            },
             passages: [15],
             systemTags: [0],
             systemTagsBridge1: [386],
             systemTagsBridge2: [385],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -421,11 +457,17 @@ describe('compressLayersTile', () => {
             { z: 5, name: '', layer: [tiles[3]] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 385 }, { systemTag: 384 }, { systemTag: 386 }], priorities },
+            commands: {
+              passages: [{ passage: 15 }],
+              systemTags: [{ systemTag: 385 }, { systemTag: 384 }, { systemTag: 386 }],
+              priorities,
+              terrainTags,
+            },
             passages: [15],
             systemTags: [0],
             systemTagsBridge1: [386],
             systemTagsBridge2: [385],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -444,17 +486,23 @@ describe('compressLayersTile', () => {
           0,
           [{ z: 5, name: '', layer: [tiles[3]] }],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 385 }, { systemTag: 384 }, { systemTag: 386 }], priorities },
+            commands: {
+              passages: [{ passage: 15 }],
+              systemTags: [{ systemTag: 385 }, { systemTag: 384 }, { systemTag: 386 }],
+              priorities,
+              terrainTags,
+            },
             passages: [15],
             systemTags: [0],
             systemTagsBridge1: [0],
             systemTagsBridge2: [385],
+            terrainTags: [1],
           },
           cache,
         ),
       ).toEqual([0, 1]);
       expect(cache.itemsOrderedByIds).toEqual([
-        [tiles[3], { passage: 15 }],
+        [tiles[3], { terrainTag: 1 }, { passage: 15 }],
         [priorities[5], tiles[3], { systemTag: 385 }],
       ]);
     });
@@ -474,11 +522,12 @@ describe('compressLayersTile', () => {
             { z: 4, name: '', layer: [tiles[4]] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities, terrainTags },
             passages: [15],
             systemTags: [384],
             systemTagsBridge1: [0],
             systemTagsBridge2: [0],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -501,11 +550,12 @@ describe('compressLayersTile', () => {
             { z: 4, name: '', layer: [tiles[4]] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities, terrainTags },
             passages: [15],
             systemTags: [384],
             systemTagsBridge1: [0],
             systemTagsBridge2: [0],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -526,17 +576,18 @@ describe('compressLayersTile', () => {
             { z: 6, name: '', layer: [tiles[4]] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities, terrainTags },
             passages: [15],
             systemTags: [384],
             systemTagsBridge1: [0],
             systemTagsBridge2: [0],
+            terrainTags: [1],
           },
           cache,
         ),
       ).toEqual([0, 1]);
       expect(cache.itemsOrderedByIds).toEqual([
-        [tiles[3], { systemTag: 384 }, { passage: 15 }],
+        [tiles[3], { systemTag: 384 }, { terrainTag: 1 }, { passage: 15 }],
         [priorities[5], tiles[3], tiles[4]],
       ]);
     });
@@ -554,11 +605,12 @@ describe('compressLayersTile', () => {
             { z: 4, name: '', layer: [tiles[4]] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [], priorities, terrainTags },
             passages: [15],
             systemTags: [0],
             systemTagsBridge1: [0],
             systemTagsBridge2: [0],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -581,11 +633,12 @@ describe('compressLayersTile', () => {
             { z: 4, name: '', layer: [tiles[4]] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [], priorities, terrainTags },
             passages: [15],
             systemTags: [0],
             systemTagsBridge1: [0],
             systemTagsBridge2: [0],
+            terrainTags: [0],
           },
           cache,
         ),
@@ -606,17 +659,18 @@ describe('compressLayersTile', () => {
             { z: 6, name: '', layer: [tiles[4]] },
           ],
           {
-            commands: { passages: [{ passage: 15 }], systemTags: [], priorities },
+            commands: { passages: [{ passage: 15 }], systemTags: [], priorities, terrainTags },
             passages: [15],
             systemTags: [0],
             systemTagsBridge1: [0],
             systemTagsBridge2: [0],
+            terrainTags: [1],
           },
           cache,
         ),
       ).toEqual([0, 1]);
       expect(cache.itemsOrderedByIds).toEqual([
-        [tiles[3], { passage: 15 }],
+        [tiles[3], { terrainTag: 1 }, { passage: 15 }],
         [priorities[5], tiles[3], tiles[4]],
       ]);
     });

@@ -15,12 +15,14 @@ export type LayersWithTileCommandCollection = {
   systemTags: number[];
   systemTagsBridge1: number[];
   systemTagsBridge2: number[];
+  terrainTags: number[];
 };
 
 export type TileCommandCollection = {
   passages: { passage: number }[];
   systemTags: { systemTag: number }[];
   priorities: { priority: number }[];
+  terrainTags: { terrainTag: number }[];
 };
 
 export type TileCommand = TileCommandCollection[keyof TileCommandCollection][number];

@@ -78,6 +78,7 @@ exports[`buildTileCommandCollection build tile command collection properly 1`] =
         "systemTag": 411,
       },
     ],
+    "terrainTags": [],
   },
   "passages": [
     0,
@@ -8791,5 +8792,6 @@ exports[`buildTileCommandCollection build tile command collection properly 1`] =
     0,
     0,
   ],
+  "terrainTags": [],
 }
 `;
