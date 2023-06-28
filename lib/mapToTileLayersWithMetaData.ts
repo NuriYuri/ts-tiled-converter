@@ -1,6 +1,6 @@
 import { layerToTiles } from './layerToTiles';
 import { TiledXMLGroup, TiledXMLLayer, TiledXMLMap, getXMLProperties } from './tiledXML/objects';
-import { LayerWithMetaData, TileMetaData } from './types';
+import type { LayerWithMetaData, TileMetaData } from './types';
 import { throwIfError, toError } from './util';
 
 let cache: Map<number, TileMetaData | null>;

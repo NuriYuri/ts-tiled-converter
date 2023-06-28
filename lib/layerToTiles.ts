@@ -1,6 +1,6 @@
 import { unzipSync } from 'zlib';
 import { TiledXMLData, TiledXMLLayer, getXMLProperties } from './tiledXML/objects';
-import { TileMetaData } from './types';
+import type { TileMetaData } from './types';
 
 export const layerToTiles = (layer: TiledXMLLayer, cache: Map<number, TileMetaData | null>) => {
   cache.set(0, null);

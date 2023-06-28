@@ -1,6 +1,6 @@
 import { TiledXMLMap, TiledXMLMapTileset, getXMLProperties } from './tiledXML/objects';
-import { LayerSplittedFromSpecialLayers, LayerWithMetaData, TileMetaData } from './types';
-import { throwIfError, toError } from './util';
+import type { LayerSplittedFromSpecialLayers, LayerWithMetaData, TileMetaData } from './types';
+import { filterTileset, throwIfError, toError } from './util';
 
 export const splitSpecialAndRegularLayers = (map: TiledXMLMap, layers: LayerWithMetaData[]): LayerSplittedFromSpecialLayers | Error => {
   try {
@@ -34,7 +34,6 @@ const findTilesetGID = (layer: LayerWithMetaData, tilesets: TiledXMLMapTileset[]
   return getXMLProperties(tileset).firstGlobalId + (TILESET_GID_OFFSET[tilesetName] || 0);
 };
 
-const filterTileset = (entity: TiledXMLMap['map'][number]): entity is TiledXMLMapTileset => 'tileset' in entity;
 const filterSpecialLayers = (layer: LayerWithMetaData) => layer.name in SPECIAL_LAYER_TILESETS;
 const filterRegularLayers = (layer: LayerWithMetaData) => !(layer.name in SPECIAL_LAYER_TILESETS);
 const tilesToMetadata = (gid: number) => (tile: TileMetaData | null) => tile ? tile.globalId - gid : 0;

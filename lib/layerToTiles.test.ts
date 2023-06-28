@@ -1,5 +1,5 @@
 import { readMap } from './readMap';
-import { TileMetaData } from './types';
+import type { TileMetaData } from './types';
 import { layerToTiles } from './layerToTiles';
 import { TiledXMLLayer, TiledXMLMap } from './tiledXML/objects';
 

@@ -1,5 +1,5 @@
 import uniq from 'lodash.uniq';
-import { LayerSplittedFromSpecialLayers, LayersWithTileCommandCollection } from './types';
+import type { LayerSplittedFromSpecialLayers, LayersWithTileCommandCollection } from './types';
 
 export const buildLayerWithTileCommandCollection = (splittedLayers: LayerSplittedFromSpecialLayers): LayersWithTileCommandCollection => {
   const passages = splittedLayers.specialLayers.find(({ name }) => name === 'passages')?.layer || [];

@@ -1,5 +1,14 @@
-export type StudioMap = {
+import { TiledXMLMapTilesetProperty } from './tiledXML/properties';
+
+export type PartialStudioMap = {
   sha1: string;
+  tileMetadata: {
+    width: number;
+    height: number;
+    tilesets: TiledXMLMapTilesetProperty[];
+    tileByTileId: (TileMetaData | TileCommand)[][];
+    layerData: number[][];
+  };
 };
 
 export type TileMetaData = {
