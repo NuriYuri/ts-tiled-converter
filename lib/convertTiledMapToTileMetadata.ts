@@ -1,3 +1,4 @@
+import { assertTilesetValidity } from './assertTilesetValidity';
 import { buildLayerWithTileCommandCollection } from './buildLayerWithTileCommandCollection';
 import { compressLayersTile } from './compressLayersTile';
 import { mapToTileLayersWithMetaData } from './mapToTileLayersWithMetaData';
@@ -11,6 +12,7 @@ import { filterTileset, throwIfError, toError } from './util';
 export const convertTiledMapToTileMetadata = (mapPath: string): PartialStudioMap | Error => {
   try {
     const mapData = throwIfError(readMap(mapPath));
+    throwIfError(assertTilesetValidity(mapData.map));
     const layerWithMetadata = throwIfError(mapToTileLayersWithMetaData(mapData.map));
     const { length } = layerWithMetadata[0].layer;
     const { width, height } = getXMLProperties(mapData.map);

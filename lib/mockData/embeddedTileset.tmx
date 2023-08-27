@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="left-up" width="35" height="32" tilewidth="32" tileheight="32" infinite="0" nextlayerid="30" nextobjectid="1">
+ <tileset firstgid="1" name="indoor" tilewidth="32" tileheight="32" tilecount="32" columns="4">
+  <image source="someFile.png" width="256" height="6784"/>
+ </tileset>
+</map>
