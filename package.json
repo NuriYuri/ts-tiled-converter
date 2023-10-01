@@ -2,7 +2,7 @@
   "bin": "dist/index.js",
   "main": "dist/index.js",
   "name": "ts-tiled-converter",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Typescript library to convert tiled map to Studio map",
   "author": {
     "email": "dont-email@communityscriptproject.com",

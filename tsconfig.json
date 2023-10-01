@@ -15,6 +15,7 @@
     "index.d.ts",
     "examples/**",
     "marshal_consumer/**",
-    "**/*.test.ts"
+    "**/*.test.ts",
+    "lib/mockData/**"
   ]
 }

@@ -19,6 +19,16 @@ export const XML_NUMERIC_ATTRIBUTES = [
   'parallaxx',
   'parallaxy',
   'hexsidelength',
+  'tilecount',
+  'columns',
+  'probability',
+  'tileId',
+  'duration',
+  'tile',
+  'rotate',
+  'vflip',
+  'hflip',
+  'preferuntransformed',
 ];
 /**
  * Constant holding the translation from XML attribute to JSON attribute name
@@ -46,6 +56,12 @@ export const XML_TO_JSON_ATTRIBUTES: Record<string, string> = {
   draworder: 'drawOrder',
   repeatx: 'repeatX',
   repeaty: 'repeatY',
+  tilecount: 'tileCount',
+  tileid: 'tileId',
+  wangid: 'wangId',
+  vflip: 'vFlip',
+  hflip: 'hFlip',
+  preferuntransformed: 'preferUntransformed',
 };
 
 export type TiledXMLGroupProperty = {
@@ -168,4 +184,67 @@ export type TiledXMLMapProperty = {
   nextLayerId: number;
   nextObjectId: number;
   infinite: 0 | 1;
+};
+
+export type TiledXMLTilesetProperty = {
+  version: string;
+  tiledVersion: string;
+  name: string;
+  tileWidth: number;
+  tileHeight: number;
+  tileCount: number;
+  columns: number;
+};
+
+export type TiledXMLTileProperty = {
+  id: number;
+  name: string;
+  class: string;
+  probability: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+export type TiledXMLFrameProperty = {
+  tileId: number;
+  duration: number;
+};
+
+export type TiledXMLTileOffsetProperty = {
+  x: number;
+  y: number;
+};
+
+export type TiledXMLGridProperty = {
+  orientation: 'orthogonal' | 'isometric';
+  width: number;
+  height: number;
+};
+
+export type TiledXMLWangSetProperty = {
+  name: string;
+  class: string;
+  tile: number;
+};
+
+export type TiledXMLWangColorProperty = {
+  name: string;
+  class: string;
+  color: string;
+  tile: number;
+  probability: number;
+};
+
+export type TiledXMLWangTileProperty = {
+  tileId: number;
+  wangId: string;
+};
+
+export type TiledXMLTransformationsProperty = {
+  hFlip: number;
+  vFlip: number;
+  rotate: number;
+  preferUntransformed: number;
 };
