@@ -22,7 +22,7 @@ export const XML_NUMERIC_ATTRIBUTES = [
   'tilecount',
   'columns',
   'probability',
-  'tileId',
+  'tileid',
   'duration',
   'tile',
   'rotate',
