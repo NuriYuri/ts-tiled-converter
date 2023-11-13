@@ -94,28 +94,79 @@ const compressTilesWithBridge = (context: Context, cache: LayerTileCache) => {
 };
 
 const GROUND = 'ground';
+const PRIORITY_OVER_PLAYER = 'priorityOverPlayer';
 const PRIORITY = 'priority';
 
 const compressTiles = (context: Context, cache: LayerTileCache) => {
-  const { tileIndex, layers, passage, priorities } = context;
+  const { tileIndex, layers } = context;
   const mapToTile = toTileByIndex(tileIndex);
-  const { ground, priority } = groupBy(layers, ({ z }) => (z === 0 ? GROUND : PRIORITY));
-  const highestPriority = Math.max(...priority.map(({ z }) => z));
+  const { ground, priorityOverPlayer, priority } = groupBy(layers, ({ z }) => (z === 0 ? GROUND : z === 1 ? PRIORITY_OVER_PLAYER : PRIORITY));
 
   const tileLayers =
     !ground || ground.length === 0
-      ? [
-          [mapToTile(priority[0]), context.systemTag, context.terrainTag, passage].filter(excludeUndefined),
-          [priorities[highestPriority] || priorities[5], ...priority.map(mapToTile)],
-        ]
-      : [
-          ground.slice(0, -1).map(mapToTile),
-          [...ground.slice(-1).map(mapToTile), context.systemTag, context.terrainTag, passage].filter(excludeUndefined),
-          [priorities[highestPriority] || priorities[5], ...priority.map(mapToTile)],
-        ];
+      ? tileLayersWithNoGrounds(priorityOverPlayer, priority, context, mapToTile)
+      : tileLayersWithGrounds(priorityOverPlayer, priority, ground, context, mapToTile);
 
   return tileLayers.filter(filterOutEmptyArrays).map(mapToTileId(cache));
 };
+
+const highestPriority = (priority: LayerWithOnlyMetaData[]) => Math.max(...priority.map(({ z }) => z));
+
+const tileLayersWithNoGrounds = (
+  priorityOverPlayer: LayerWithOnlyMetaData[] | undefined,
+  priority: LayerWithOnlyMetaData[] | undefined,
+  context: Context,
+  mapToTile: (layer: LayerWithOnlyMetaData) => TileMetaData,
+) => {
+  const { priorities } = context;
+  if (priorityOverPlayer && priorityOverPlayer.length > 0) {
+    return [
+      getPriorityTileWithContext(mapToTile(priorityOverPlayer[0]), context),
+      [priorities[1], ...priorityOverPlayer.map(mapToTile)],
+      priority && priority.length > 0 ? [priorities[highestPriority(priority)] || priorities[5], ...priority.map(mapToTile)] : [],
+    ];
+  }
+
+  if (!priority || priority.length === 0) {
+    // This condition is impossible in theory
+    return [[{ globalId: 1, transformId: 0 }, context.systemTag, context.terrainTag, context.passage].filter(excludeUndefined)];
+  }
+
+  return [
+    getPriorityTileWithContext(mapToTile(priority[0]), context),
+    [priorities[highestPriority(priority)] || priorities[5], ...priority.map(mapToTile)],
+  ];
+};
+
+const tileLayersWithGrounds = (
+  priorityOverPlayer: LayerWithOnlyMetaData[] | undefined,
+  priority: LayerWithOnlyMetaData[] | undefined,
+  ground: LayerWithOnlyMetaData[],
+  context: Context,
+  mapToTile: (layer: LayerWithOnlyMetaData) => TileMetaData,
+) => {
+  const { priorities } = context;
+
+  if (priorityOverPlayer && priorityOverPlayer.length > 0) {
+    return [
+      getGroundTile(ground, context, mapToTile),
+      [priorities[1], ...priorityOverPlayer.map(mapToTile)],
+      priority && priority.length > 0 ? [priorities[highestPriority(priority)] || priorities[5], ...priority.map(mapToTile)] : [],
+    ];
+  }
+
+  return [
+    ground.slice(0, -1).map(mapToTile),
+    getGroundTile(ground.slice(-1), context, mapToTile),
+    priority && priority.length > 0 ? [priorities[highestPriority(priority)] || priorities[5], ...priority.map(mapToTile)] : [],
+  ];
+};
+
+const getGroundTile = (ground: LayerWithOnlyMetaData[], context: Context, mapToTile: (layer: LayerWithOnlyMetaData) => TileMetaData) =>
+  [...ground.map(mapToTile), context.systemTag, context.terrainTag, context.passage].filter(excludeUndefined);
+
+const getPriorityTileWithContext = (tile: TileMetaData, context: Context) =>
+  [tile, context.systemTag, context.terrainTag, context.passage].filter(excludeUndefined);
 
 const toTileByIndex = (tileIndex: number) => (layer: LayerWithOnlyMetaData) => layer.layer[tileIndex];
 const filterOutEmptyArrays = <T>({ length }: T[]) => length !== 0;

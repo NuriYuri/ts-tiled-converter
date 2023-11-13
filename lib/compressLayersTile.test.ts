@@ -9,6 +9,7 @@ const tiles: TileMetaData[] = [
   { globalId: 3, transformId: 0 },
   { globalId: 4, transformId: 0 },
   { globalId: 5, transformId: 0 },
+  { globalId: 6, transformId: 0 },
 ];
 
 const priorities = [0, 1, 2, 3, 4, 5].map((priority) => ({ priority }));
@@ -518,7 +519,7 @@ describe('compressLayersTile', () => {
             { z: 0, name: '', layer: [tiles[0]] },
             { z: 0, name: '', layer: [tiles[1]] },
             { z: 0, name: '', layer: [tiles[2]] },
-            { z: 1, name: '', layer: [tiles[3]] },
+            { z: 2, name: '', layer: [tiles[3]] },
             { z: 4, name: '', layer: [tiles[4]] },
           ],
           {
@@ -539,6 +540,38 @@ describe('compressLayersTile', () => {
       ]);
     });
 
+    it('puts all grounds on layer 1, add player priority on layer 2, combines priority tags and use highest priority', () => {
+      const cache = initNDSpace<TileMetaData | TileCommand, 0>(0);
+      expect(
+        compressLayersTile(
+          0,
+          [
+            { z: 0, name: '', layer: [tiles[0]] },
+            { z: 0, name: '', layer: [tiles[1]] },
+            { z: 0, name: '', layer: [tiles[2]] },
+            { z: 1, name: '', layer: [tiles[5]] },
+            { z: 1, name: '', layer: [tiles[6]] },
+            { z: 2, name: '', layer: [tiles[3]] },
+            { z: 4, name: '', layer: [tiles[4]] },
+          ],
+          {
+            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities, terrainTags },
+            passages: [15],
+            systemTags: [384],
+            systemTagsBridge1: [0],
+            systemTagsBridge2: [0],
+            terrainTags: [0],
+          },
+          cache,
+        ),
+      ).toEqual([0, 1, 2]);
+      expect(cache.itemsOrderedByIds).toEqual([
+        [tiles[0], tiles[1], tiles[2], { systemTag: 384 }, { passage: 15 }],
+        [priorities[1], tiles[5], tiles[6]],
+        [priorities[4], tiles[3], tiles[4]],
+      ]);
+    });
+
     it('works with only one ground, combines priority tags and use highest priority', () => {
       const cache = initNDSpace<TileMetaData | TileCommand, 0>(0);
       expect(
@@ -546,7 +579,7 @@ describe('compressLayersTile', () => {
           0,
           [
             { z: 0, name: '', layer: [tiles[0]] },
-            { z: 1, name: '', layer: [tiles[3]] },
+            { z: 3, name: '', layer: [tiles[3]] },
             { z: 4, name: '', layer: [tiles[4]] },
           ],
           {
@@ -566,13 +599,43 @@ describe('compressLayersTile', () => {
       ]);
     });
 
+    it('works with only one ground, adds player priority, combines priority tags and use highest priority', () => {
+      const cache = initNDSpace<TileMetaData | TileCommand, 0>(0);
+      expect(
+        compressLayersTile(
+          0,
+          [
+            { z: 0, name: '', layer: [tiles[0]] },
+            { z: 1, name: '', layer: [tiles[5]] },
+            { z: 1, name: '', layer: [tiles[6]] },
+            { z: 3, name: '', layer: [tiles[3]] },
+            { z: 4, name: '', layer: [tiles[4]] },
+          ],
+          {
+            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities, terrainTags },
+            passages: [15],
+            systemTags: [384],
+            systemTagsBridge1: [0],
+            systemTagsBridge2: [0],
+            terrainTags: [0],
+          },
+          cache,
+        ),
+      ).toEqual([0, 1, 2]);
+      expect(cache.itemsOrderedByIds).toEqual([
+        [tiles[0], { systemTag: 384 }, { passage: 15 }],
+        [priorities[1], tiles[5], tiles[6]],
+        [priorities[4], tiles[3], tiles[4]],
+      ]);
+    });
+
     it('works with no ground, combines priority tags and prevents bullshit priority', () => {
       const cache = initNDSpace<TileMetaData | TileCommand, 0>(0);
       expect(
         compressLayersTile(
           0,
           [
-            { z: 1, name: '', layer: [tiles[3]] },
+            { z: 2, name: '', layer: [tiles[3]] },
             { z: 6, name: '', layer: [tiles[4]] },
           ],
           {
@@ -592,6 +655,35 @@ describe('compressLayersTile', () => {
       ]);
     });
 
+    it('works with no ground, adds player priority, combines priority tags and prevents bullshit priority', () => {
+      const cache = initNDSpace<TileMetaData | TileCommand, 0>(0);
+      expect(
+        compressLayersTile(
+          0,
+          [
+            { z: 1, name: '', layer: [tiles[5]] },
+            { z: 1, name: '', layer: [tiles[6]] },
+            { z: 2, name: '', layer: [tiles[3]] },
+            { z: 6, name: '', layer: [tiles[4]] },
+          ],
+          {
+            commands: { passages: [{ passage: 15 }], systemTags: [{ systemTag: 384 }], priorities, terrainTags },
+            passages: [15],
+            systemTags: [384],
+            systemTagsBridge1: [0],
+            systemTagsBridge2: [0],
+            terrainTags: [1],
+          },
+          cache,
+        ),
+      ).toEqual([0, 1, 2]);
+      expect(cache.itemsOrderedByIds).toEqual([
+        [tiles[5], { systemTag: 384 }, { terrainTag: 1 }, { passage: 15 }],
+        [priorities[1], tiles[5], tiles[6]],
+        [priorities[5], tiles[3], tiles[4]],
+      ]);
+    });
+
     it('puts last ground on layer 2, combines priority tags and use highest priority (no system tag)', () => {
       const cache = initNDSpace<TileMetaData | TileCommand, 0>(0);
       expect(
@@ -601,7 +693,7 @@ describe('compressLayersTile', () => {
             { z: 0, name: '', layer: [tiles[0]] },
             { z: 0, name: '', layer: [tiles[1]] },
             { z: 0, name: '', layer: [tiles[2]] },
-            { z: 1, name: '', layer: [tiles[3]] },
+            { z: 2, name: '', layer: [tiles[3]] },
             { z: 4, name: '', layer: [tiles[4]] },
           ],
           {
@@ -622,6 +714,38 @@ describe('compressLayersTile', () => {
       ]);
     });
 
+    it('puts all grounds on layer 1, adds player priority, combines priority tags and use highest priority (no system tag)', () => {
+      const cache = initNDSpace<TileMetaData | TileCommand, 0>(0);
+      expect(
+        compressLayersTile(
+          0,
+          [
+            { z: 0, name: '', layer: [tiles[0]] },
+            { z: 0, name: '', layer: [tiles[1]] },
+            { z: 0, name: '', layer: [tiles[2]] },
+            { z: 1, name: '', layer: [tiles[5]] },
+            { z: 1, name: '', layer: [tiles[6]] },
+            { z: 2, name: '', layer: [tiles[3]] },
+            { z: 4, name: '', layer: [tiles[4]] },
+          ],
+          {
+            commands: { passages: [{ passage: 15 }], systemTags: [], priorities, terrainTags },
+            passages: [15],
+            systemTags: [0],
+            systemTagsBridge1: [0],
+            systemTagsBridge2: [0],
+            terrainTags: [0],
+          },
+          cache,
+        ),
+      ).toEqual([0, 1, 2]);
+      expect(cache.itemsOrderedByIds).toEqual([
+        [tiles[0], tiles[1], tiles[2], { passage: 15 }],
+        [priorities[1], tiles[5], tiles[6]],
+        [priorities[4], tiles[3], tiles[4]],
+      ]);
+    });
+
     it('works with only one ground, combines priority tags and use highest priority (no system tag)', () => {
       const cache = initNDSpace<TileMetaData | TileCommand, 0>(0);
       expect(
@@ -629,7 +753,7 @@ describe('compressLayersTile', () => {
           0,
           [
             { z: 0, name: '', layer: [tiles[0]] },
-            { z: 1, name: '', layer: [tiles[3]] },
+            { z: 2, name: '', layer: [tiles[3]] },
             { z: 4, name: '', layer: [tiles[4]] },
           ],
           {
@@ -649,13 +773,43 @@ describe('compressLayersTile', () => {
       ]);
     });
 
+    it('works with only one ground, adds player priority, combines priority tags and use highest priority (no system tag)', () => {
+      const cache = initNDSpace<TileMetaData | TileCommand, 0>(0);
+      expect(
+        compressLayersTile(
+          0,
+          [
+            { z: 0, name: '', layer: [tiles[0]] },
+            { z: 1, name: '', layer: [tiles[5]] },
+            { z: 1, name: '', layer: [tiles[6]] },
+            { z: 2, name: '', layer: [tiles[3]] },
+            { z: 4, name: '', layer: [tiles[4]] },
+          ],
+          {
+            commands: { passages: [{ passage: 15 }], systemTags: [], priorities, terrainTags },
+            passages: [15],
+            systemTags: [0],
+            systemTagsBridge1: [0],
+            systemTagsBridge2: [0],
+            terrainTags: [0],
+          },
+          cache,
+        ),
+      ).toEqual([0, 1, 2]);
+      expect(cache.itemsOrderedByIds).toEqual([
+        [tiles[0], { passage: 15 }],
+        [priorities[1], tiles[5], tiles[6]],
+        [priorities[4], tiles[3], tiles[4]],
+      ]);
+    });
+
     it('works with no ground, combines priority tags and prevents bullshit priority (no system tag)', () => {
       const cache = initNDSpace<TileMetaData | TileCommand, 0>(0);
       expect(
         compressLayersTile(
           0,
           [
-            { z: 1, name: '', layer: [tiles[3]] },
+            { z: 2, name: '', layer: [tiles[3]] },
             { z: 6, name: '', layer: [tiles[4]] },
           ],
           {
@@ -671,6 +825,35 @@ describe('compressLayersTile', () => {
       ).toEqual([0, 1]);
       expect(cache.itemsOrderedByIds).toEqual([
         [tiles[3], { terrainTag: 1 }, { passage: 15 }],
+        [priorities[5], tiles[3], tiles[4]],
+      ]);
+    });
+
+    it('works with no ground, adds player priority, combines priority tags and prevents bullshit priority (no system tag)', () => {
+      const cache = initNDSpace<TileMetaData | TileCommand, 0>(0);
+      expect(
+        compressLayersTile(
+          0,
+          [
+            { z: 1, name: '', layer: [tiles[5]] },
+            { z: 1, name: '', layer: [tiles[6]] },
+            { z: 2, name: '', layer: [tiles[3]] },
+            { z: 6, name: '', layer: [tiles[4]] },
+          ],
+          {
+            commands: { passages: [{ passage: 15 }], systemTags: [], priorities, terrainTags },
+            passages: [15],
+            systemTags: [0],
+            systemTagsBridge1: [0],
+            systemTagsBridge2: [0],
+            terrainTags: [1],
+          },
+          cache,
+        ),
+      ).toEqual([0, 1, 2]);
+      expect(cache.itemsOrderedByIds).toEqual([
+        [tiles[5], { terrainTag: 1 }, { passage: 15 }],
+        [priorities[1], tiles[5], tiles[6]],
         [priorities[5], tiles[3], tiles[4]],
       ]);
     });
