@@ -7,6 +7,7 @@ describe('getTilesetImageAndAnimatedTiles', () => {
       assetSource: {
         inTileset: 'prio_w.png',
         pathIncludingMapDirname: 'lib/mockData/prio_w.png',
+        transparency: 'f05ba1',
       },
     });
   });
@@ -60,6 +61,7 @@ describe('getTilesetImageAndAnimatedTiles', () => {
       assetSource: {
         inTileset: 'Nature.png',
         pathIncludingMapDirname: 'lib/mockData/Nature.png',
+        transparency: undefined,
       },
     });
   });

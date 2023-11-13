@@ -19,11 +19,12 @@ export const getTilesetImageAndAnimatedTiles = (path: string) => {
     });
 
     const tilesetDirName = dirname(path);
-    const { source } = getXMLProperties(tilesetImage);
+    const { source, trans } = getXMLProperties(tilesetImage);
     return {
       assetSource: {
         inTileset: source,
         pathIncludingMapDirname: `${tilesetDirName}/${source}`,
+        transparency: trans,
       },
       animatedTiles,
     };
