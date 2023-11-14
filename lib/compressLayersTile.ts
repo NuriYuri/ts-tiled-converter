@@ -148,10 +148,18 @@ const tileLayersWithGrounds = (
   const { priorities } = context;
 
   if (priorityOverPlayer && priorityOverPlayer.length > 0) {
+    if (priority && priority.length > 0) {
+      return [
+        getGroundTile(ground, context, mapToTile),
+        [priorities[1], ...priorityOverPlayer.map(mapToTile)],
+        [priorities[highestPriority(priority)] || priorities[5], ...priority.map(mapToTile)],
+      ];
+    }
+
     return [
-      getGroundTile(ground, context, mapToTile),
+      ground.slice(0, -1).map(mapToTile),
+      getGroundTile(ground.slice(-1), context, mapToTile),
       [priorities[1], ...priorityOverPlayer.map(mapToTile)],
-      priority && priority.length > 0 ? [priorities[highestPriority(priority)] || priorities[5], ...priority.map(mapToTile)] : [],
     ];
   }
 
