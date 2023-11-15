@@ -1,4 +1,5 @@
 import { layerToTiles } from './layerToTiles';
+import { SPECIAL_LAYER_TILESETS } from './splitSpecialAndRegularLayers';
 import { TiledXMLGroup, TiledXMLLayer, TiledXMLMap, getXMLProperties } from './tiledXML/objects';
 import type { LayerWithMetaData, TileMetaData } from './types';
 import { throwIfError, toError } from './util';
@@ -17,7 +18,13 @@ export const mapToTileLayersWithMetaData = ({ map }: TiledXMLMap): LayerWithMeta
 type AnyMapOrGroupChild = (TiledXMLMap['map'] | TiledXMLGroup['group'])[number];
 type LayerWithZIndex = { z: number; name: string; entity: TiledXMLLayer };
 
-const filterLayerOrGroup = (entity: AnyMapOrGroupChild): entity is TiledXMLLayer | TiledXMLGroup => 'layer' in entity || 'group' in entity;
+const isVisibleLayer = (entity: AnyMapOrGroupChild): entity is TiledXMLLayer =>
+  'layer' in entity && (getXMLProperties(entity).visible != 0 || getXMLProperties(entity).name in SPECIAL_LAYER_TILESETS);
+
+const isVisibleGroup = (entity: AnyMapOrGroupChild): entity is TiledXMLGroup =>
+  'group' in entity && (getXMLProperties(entity).visible != 0 || getXMLProperties(entity).name.startsWith('system'));
+
+const filterLayerOrGroup = (entity: AnyMapOrGroupChild): entity is TiledXMLLayer | TiledXMLGroup => isVisibleLayer(entity) || isVisibleGroup(entity);
 
 const filterAndFlatten = (e: AnyMapOrGroupChild[], groupZIndex: number) => e.filter(filterLayerOrGroup).flatMap(mapGroupOrLayerToLayers(groupZIndex));
 

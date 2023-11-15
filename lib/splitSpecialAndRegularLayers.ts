@@ -13,7 +13,7 @@ export const splitSpecialAndRegularLayers = (map: TiledXMLMap, layers: LayerWith
   }
 };
 
-const SPECIAL_LAYER_TILESETS: Record<string, string | undefined> = {
+export const SPECIAL_LAYER_TILESETS: Record<string, string | undefined> = {
   passages: 'passages.tsx',
   systemtags: 'systemtags.tsx',
   systemtags_bridge1: 'systemtags.tsx',
