@@ -1,9 +1,9 @@
 import fs from 'fs';
-import { TiledXMLImage, TiledXMLMap, TiledXMLTileset, getXMLProperties } from './tiledXML/objects';
+import { TiledXMLImage, TiledXMLMap, getXMLProperties } from './tiledXML/objects';
 import { decodeXML } from './tiledXML/decodeXML';
 import { filterTileset, throwIfError } from './util';
 import { basename, dirname } from 'path';
-import { readTileset } from './readTileset';
+import { readTileset } from './reader/readTileset';
 
 export const listResources = (path: string, knownTilesetFilenames: string[]) => {
   try {

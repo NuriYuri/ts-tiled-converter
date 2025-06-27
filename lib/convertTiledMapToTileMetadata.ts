@@ -1,11 +1,11 @@
-import { assertTilesetValidity } from './assertTilesetValidity';
-import { assertMapValidity } from './assertMapValidity';
-import { buildLayerWithTileCommandCollection } from './buildLayerWithTileCommandCollection';
-import { compressLayersTile } from './compressLayersTile';
-import { mapToTileLayersWithMetaData } from './mapToTileLayersWithMetaData';
+import { assertTilesetValidity } from './tiledToStudio/assertTilesetValidity';
+import { assertMapValidity } from './tiledToStudio/assertMapValidity';
+import { buildLayerWithTileCommandCollection } from './tiledToStudio/buildLayerWithTileCommandCollection';
+import { compressLayersTile } from './tiledToStudio/compressLayersTile';
+import { mapToTileLayersWithMetaData } from './tiledToStudio/mapToTileLayersWithMetaData';
 import { initNDSpace } from './ndSpace';
-import { readMap } from './readMap';
-import { splitSpecialAndRegularLayers } from './splitSpecialAndRegularLayers';
+import { readMap } from './reader/readMap';
+import { splitSpecialAndRegularLayers } from './tiledToStudio/splitSpecialAndRegularLayers';
 import { getXMLProperties } from './tiledXML/objects';
 import type { PartialStudioMap, TileCommand, TileMetaData } from './types';
 import { filterTileset, throwIfError, toError } from './util';

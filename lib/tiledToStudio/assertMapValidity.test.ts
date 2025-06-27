@@ -1,5 +1,5 @@
-import { readMap } from './readMap';
-import { throwIfError } from './util';
+import { readMap } from '../reader/readMap';
+import { throwIfError } from '../util';
 import { assertMapValidity } from './assertMapValidity';
 
 describe('assertMapValidity', () => {

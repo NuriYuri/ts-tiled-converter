@@ -1,5 +1,5 @@
 import { dirname } from 'path';
-import { readTileset } from './readTileset';
+import { readTileset } from './reader/readTileset';
 import { TiledXMLAnimation, TiledXMLImage, TiledXMLTile, getXMLProperties } from './tiledXML/objects';
 import { throwIfError } from './util';
 
